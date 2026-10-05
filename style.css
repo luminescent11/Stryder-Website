@@ -276,25 +276,25 @@ main {
     font-size: 0.875rem;
 }
 
-/* Device images: Apple's official Apple Watch frame (images/watch-frame.png, 560 × 880)
-   layered over a plain 416 × 496 screenshot. The screen box matches the frame's transparent
-   screen area: x 72-488, y 192-688. */
+/* Device images: Apple's official Apple Watch SE 44 mm frame (images/watch-frame.png, 580 × 940)
+   layered over a plain 368 × 448 screenshot from an SE 44 mm. The screen box matches the frame's
+   transparent screen area: x 106-474, y 246-694. */
 
 .device {
     --w: 13rem;
     position: relative;
     width: var(--w);
-    aspect-ratio: 560 / 880;
+    aspect-ratio: 580 / 940;
     margin: 0;
     justify-self: center;
 }
 
 .hero .device {
-    --w: clamp(13rem, 24vw, 17rem);
+    --w: clamp(14rem, 26vw, 19rem);
 }
 
 .feature .device {
-    --w: 11rem;
+    --w: 12rem;
 }
 
 .device__frame {
@@ -307,16 +307,16 @@ main {
 
 .device__screen {
     position: absolute;
-    left: 12.857%;
-    top: 21.818%;
-    width: 74.286%;
-    height: 56.364%;
+    left: 18.276%;
+    top: 26.170%;
+    width: 63.448%;
+    height: 47.660%;
     display: grid;
     place-items: center;
     overflow: hidden;
-    /* Slightly tighter than the frame's ~102 px screen corners so the
+    /* Slightly tighter than the frame's ~65 px screen corners so the
        square box never shows past the case. */
-    border-radius: 22% / 18.5%;
+    border-radius: 16% / 13%;
     background: #000000;
 }
 
