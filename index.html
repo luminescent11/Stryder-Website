@@ -1,51 +1,148 @@
+---
+title: "Stryder: sprint timing on Apple Watch"
+description: "Stryder is an Apple Watch app that times your sprints. It starts on your first push, stops at your distance, and saves the whole run. In testing now."
+---
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stryder</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+{% include head.html %}
 <body>
-    <h1>Stryder</h1>
-    <h2>Contact</h2>
-    <p>Contact me at <a href="mailto:support.stryder@gmail.com">support.stryder@gmail.com</a> for any inquiries.</p>
-    <hr>
-    <h2>Stryder Privacy Policy</h2>
+    {% include header.html %}
 
-    <p class="meta">Last updated: September 24, 2026</p>
+    <main id="main">
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="hero__text">
+                <h1 id="hero-title">Sprint timing from your wrist.</h1>
+                <p class="lede">Stryder is an Apple Watch app that starts timing on your first push, stops at your distance, and keeps the whole run. In testing now.</p>
 
-    <p>Stryder is a standalone Apple Watch app that times sprints for track athletes using the Watch's own sensors. This policy explains what data Stryder collects, why, and how long it's kept.</p>
+                <p class="note" role="note">Waitlist sign-up isn't open yet. For beta news in the meantime, email support.stryder@gmail.com.</p>
 
-    <h3>Data We Collect</h3>
-    <p>Stryder collects the following data directly from your Apple Watch's sensors while you're actively using the app:</p>
-    <ul>
-    <li>Location (GPS): used to measure distance covered during a sprint.</li>
-    <li>Motion data (accelerometer): used to detect strides.</li>
-    </ul>
+                <!-- WAITLIST: when sign-up opens, replace the <form> tag below with
+                     <form id="waitlist" class="waitlist" action="https://submit-form.com/V3xgTuhTt" method="POST">
+                     then remove the two `disabled` attributes and the note above. -->
+                <form id="waitlist" class="waitlist">
+                    <label for="email">Email</label>
+                    <div class="waitlist__row">
+                        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" disabled>
+                        <button type="submit" disabled>Join the waitlist</button>
+                    </div>
+                    <!-- WAITLIST: uncomment the spam trap below (confirm the field name in Formspark's docs).
+                    <input type="checkbox" name="_honeypot" tabindex="-1" autocomplete="off" hidden>
+                    -->
+                    <p id="waitlist-error" class="waitlist__error" hidden>Couldn't join the waitlist. Check your connection and try again, or email support.stryder@gmail.com.</p>
+                </form>
+                <p id="waitlist-done" class="waitlist__done" role="status" tabindex="-1" hidden>You're on the waitlist. We'll email you when the beta opens.</p>
+                <p class="helper">Beta updates only. Unsubscribe anytime. You must be 13 or older. <a href="privacy.html">Privacy policy</a></p>
+            </div>
 
-    <p>Stryder also writes a running workout to HealthKit.</p>
-    <p>Stryder does not collect your name, email, or any account information. Stryder does not currently share any data with third parties or transmit it off your device.</p>
+            <figure class="device">
+                <div class="device__screen">
+                    <span class="device__placeholder">watch-hero.png</span>
+                    <img src="images/watch-hero.png" alt="Stryder on Apple Watch" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                </div>
+                <img class="device__frame" src="images/watch-frame.png" alt="">
+            </figure>
+        </section>
 
-    <h3>How We Use Your Data</h3>
-    <p>All data Stryder collects is used for computing your sprint distance and time while you're running. Location and motion data are combined on-device to calculate distance. Currently, this data is not transmitted of your device.</p>
-    <p>Stryder does not use your data for advertising, analytics, or any purpose beyond timing and reviewing your own sprints.</p>
+        <section id="how" class="how" aria-labelledby="how-title">
+            <h2 id="how-title">What Stryder does</h2>
 
-    <h3>Data Retention &amp; Deletion</h3>
-    <ul>
-    <li>Raw location samples collected during a sprint are not retained beyond that sprint session, as they are only used to compute the final distance figure.</li>
-    <li>Sprint results (time, distance, and derived data from a completed sprint) are stored locally on your device and kept until you delete them in the app.</li>
-    <li>Stryder does not currently store any of your data in the cloud. If cloud sync is added in the future, this policy will be updated, and you'll be asked for consent before any data leaves your device.</li>
-    </ul>
+            <div class="feature">
+                <div class="feature__text">
+                    <h3>Starts on your first push</h3>
+                    <p>Set your distance and get in position. Stryder starts the clock on your first explosive movement, so nobody has to stand at the start line with a stopwatch.</p>
+                </div>
+                <figure class="device">
+                    <div class="device__screen">
+                        <span class="device__placeholder">watch-start.png</span>
+                        <img src="images/watch-start.png" alt="Stryder ready to start a sprint" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                    </div>
+                    <img class="device__frame" src="images/watch-frame.png" alt="">
+                </figure>
+            </div>
 
-    <h3>Consent &amp; Your Choices</h3>
-    <p>Stryder asks for your permission before accessing location and HealthKit data, through Apple's standard system permission prompts. You can revoke these permissions at any time in Apple Watch Settings.</p>
-    <p>If you decline location or HealthKit access, some or all of Stryder's sprint-timing features may not function, since they depend on this data to work.</p>
+            <div class="feature">
+                <div class="feature__text">
+                    <h3>Stops at your distance</h3>
+                    <p>Stryder uses your watch's GPS and motion sensors to track how far you've run, and stops the time when you reach the distance you set.</p>
+                </div>
+                <figure class="device">
+                    <div class="device__screen">
+                        <span class="device__placeholder">watch-stop.png</span>
+                        <img src="images/watch-stop.png" alt="Stryder showing a finished time" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                    </div>
+                    <img class="device__frame" src="images/watch-frame.png" alt="">
+                </figure>
+            </div>
 
-    <h3>Future Changes</h3>
-    <p>Stryder is under active development. If a future version adds features that change how your data is collected or used, such as syncing sprint history to the cloud, this policy will be updated first, and you'll be asked for explicit consent before that change takes effect.</p>
+            <div class="feature">
+                <div class="feature__text">
+                    <h3>Review the whole run</h3>
+                    <p>A stopwatch gives you one number. Stryder saves your time and distance through the whole run, so you have more than a single result to look back on.</p>
+                </div>
+                <figure class="device">
+                    <div class="device__screen">
+                        <span class="device__placeholder">watch-review.png</span>
+                        <img src="images/watch-review.png" alt="Stryder showing a saved run" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                    </div>
+                    <img class="device__frame" src="images/watch-frame.png" alt="">
+                </figure>
+            </div>
 
-    <h3>Contact</h3>
-    <p>Questions about this policy, or requests to delete your data, can be sent to: <a href="mailto:support.stryder@gmail.com">support.stryder@gmail.com</a></p>
+            <dl class="facts">
+                <div>
+                    <dt>No iPhone needed</dt>
+                    <dd>Stryder runs on Apple Watch by itself.</dd>
+                </div>
+                <div>
+                    <dt>Free, with no ads</dt>
+                    <dd>Nothing to buy and no ads in the app.</dd>
+                </div>
+                <div>
+                    <dt>Accuracy validation in progress</dt>
+                    <dd>We're measuring Stryder's accuracy on a real track, and will publish the result and method here.</dd>
+                </div>
+            </dl>
+        </section>
+    </main>
+
+    {% include footer.html %}
+
+    <!-- WAITLIST: uncomment this script when sign-up opens. It sends the email to
+         Formspark in the background so the visitor stays on the page.
+    <script>
+    (function () {
+        var form = document.getElementById('waitlist');
+        var button = form.querySelector('button');
+        var error = document.getElementById('waitlist-error');
+        var done = document.getElementById('waitlist-done');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            error.hidden = true;
+            button.disabled = true;
+            button.textContent = 'Joining…';
+
+            var body = { email: form.elements.email.value.trim() };
+            var trap = form.elements._honeypot;
+            if (trap && trap.checked) body._honeypot = 'on';
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(body)
+            }).then(function (response) {
+                if (!response.ok) throw new Error('Formspark returned ' + response.status);
+                form.hidden = true;
+                done.hidden = false;
+                done.focus();
+            }).catch(function () {
+                error.hidden = false;
+                button.disabled = false;
+                button.textContent = 'Join the waitlist';
+            });
+        });
+    })();
+    </script>
+    -->
 </body>
 </html>

@@ -1,0 +1,5 @@
+# GitHub Pages builds this site with Jekyll. Pages with front matter (the
+# --- lines at the top) get the shared header and footer from _includes/.
+exclude:
+  - TODO.md
+  - images/README.md

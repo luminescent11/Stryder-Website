@@ -1,0 +1,452 @@
+@font-face {
+    font-family: "Archivo";
+    font-style: normal;
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+    font-display: swap;
+    src: url("fonts/Archivo-latin-var.woff2") format("woff2");
+}
+
+:root {
+    --chalk: #F3F4F1;
+    --infield: #17233B;
+    --lane: #3B5A96;
+    --lane-tint: #E2E7F0;
+    --finish: #D7261E;
+    --gravel: #626977;
+    --rule: #D5D8DE;
+
+    --font: "Archivo", "Arial Narrow", system-ui, sans-serif;
+    --gutter: clamp(1rem, 4vw, 3rem);
+    --measure: 36rem;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--chalk);
+    color: var(--infield);
+    font-family: var(--font);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+}
+
+img {
+    max-width: 100%;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+a {
+    color: var(--lane);
+    text-underline-offset: 0.15em;
+}
+
+a:hover {
+    color: var(--infield);
+}
+
+:focus-visible {
+    outline: 3px solid var(--lane);
+    outline-offset: 3px;
+}
+
+.skip-link {
+    position: absolute;
+    left: var(--gutter);
+    top: -4rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--infield);
+    color: var(--chalk);
+}
+
+.skip-link:focus {
+    top: 0.75rem;
+}
+
+/* Headings: condensed and heavy, like a stadium board. */
+h1,
+h2,
+h3,
+.wordmark {
+    font-stretch: 68%;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    word-spacing: 0.08em;
+    margin: 0;
+}
+
+h1 {
+    font-size: clamp(3rem, 8.5vw, 6.25rem);
+    max-width: 9ch;
+}
+
+h2 {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+}
+
+h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-stretch: 75%;
+}
+
+p {
+    margin: 0;
+}
+
+/* Header and footer */
+
+.site-header,
+.site-footer,
+main {
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+}
+
+.site-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-block: 1.25rem;
+}
+
+.wordmark {
+    font-size: 1.75rem;
+    color: var(--infield);
+    text-decoration: none;
+}
+
+.site-header .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.wordmark__logo {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 8px;
+}
+
+.site-header nav {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.site-header nav a {
+    color: var(--infield);
+    text-decoration: none;
+}
+
+.site-header nav a:hover,
+.site-header nav a[aria-current="page"] {
+    text-decoration: underline;
+}
+
+.site-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    padding-block: 2rem 3rem;
+    /* Divider spans the content width, not the side padding. */
+    background: linear-gradient(var(--rule), var(--rule)) center top / calc(100% - 2 * var(--gutter)) 1px no-repeat;
+    color: var(--gravel);
+    font-size: 0.9375rem;
+}
+
+.site-footer .legal {
+    flex-basis: 100%;
+    font-size: 0.8125rem;
+}
+
+/* Hero */
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2.5rem 4rem;
+    padding-block: clamp(2rem, 6vw, 5rem) clamp(3rem, 8vw, 6rem);
+}
+
+.hero__text {
+    display: grid;
+    gap: 1.5rem;
+    max-width: var(--measure);
+}
+
+.lede {
+    font-size: 1.25rem;
+    max-width: 32rem;
+}
+
+.note {
+    padding: 0.75rem 1rem;
+    background: var(--lane-tint);
+    border-left: 4px solid var(--lane);
+    font-size: 0.9375rem;
+}
+
+/* Waitlist form */
+
+.waitlist {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.waitlist label {
+    font-weight: 600;
+}
+
+.waitlist__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.waitlist input,
+.waitlist button {
+    font: inherit;
+    min-height: 3rem;
+    border-radius: 6px;
+}
+
+.waitlist input {
+    flex: 1 1 14rem;
+    padding: 0 0.875rem;
+    border: 2px solid var(--infield);
+    background: #FFFFFF;
+    color: var(--infield);
+}
+
+.waitlist button {
+    flex: 0 0 auto;
+    padding: 0 1.25rem;
+    border: 0;
+    background: var(--finish);
+    color: #FFFFFF;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.waitlist button:hover {
+    background: #B81F18;
+}
+
+/* Sign-up isn't open yet: keep the controls legible but clearly inactive. */
+.waitlist input:disabled {
+    border-color: var(--gravel);
+    background: transparent;
+    cursor: not-allowed;
+}
+
+.waitlist button:disabled {
+    background: var(--rule);
+    color: var(--gravel);
+    cursor: not-allowed;
+}
+
+.waitlist__error {
+    color: var(--finish);
+    font-size: 0.9375rem;
+}
+
+.waitlist__done {
+    font-weight: 600;
+}
+
+.helper {
+    color: var(--gravel);
+    font-size: 0.875rem;
+}
+
+/* Device images: Apple's official Apple Watch frame (images/watch-frame.png, 560 × 880)
+   layered over a plain 416 × 496 screenshot. The screen box matches the frame's transparent
+   screen area: x 72-488, y 192-688. */
+
+.device {
+    --w: 13rem;
+    position: relative;
+    width: var(--w);
+    aspect-ratio: 560 / 880;
+    margin: 0;
+    justify-self: center;
+}
+
+.hero .device {
+    --w: clamp(13rem, 24vw, 17rem);
+}
+
+.feature .device {
+    --w: 11rem;
+}
+
+.device__frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.device__screen {
+    position: absolute;
+    left: 12.857%;
+    top: 21.818%;
+    width: 74.286%;
+    height: 56.364%;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    /* Slightly tighter than the frame's ~102 px screen corners so the
+       square box never shows past the case. */
+    border-radius: 22% / 18.5%;
+    background: #000000;
+}
+
+.device__screen img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.device__placeholder {
+    padding: 0.5rem;
+    color: #9AA1AE;
+    font-size: 0.75rem;
+    text-align: center;
+}
+
+/* Features */
+
+.how {
+    display: grid;
+    gap: clamp(3rem, 7vw, 5rem);
+    padding-block: clamp(3rem, 8vw, 5rem);
+    border-top: 1px solid var(--rule);
+}
+
+.feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1.5rem 4rem;
+    max-width: 58rem;
+}
+
+.feature__text {
+    display: grid;
+    gap: 0.75rem;
+    max-width: var(--measure);
+}
+
+.facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 2rem 3rem;
+    margin: 0;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--rule);
+}
+
+.facts dt {
+    font-stretch: 75%;
+    font-weight: 800;
+    font-size: 1.25rem;
+    line-height: 1.15;
+    margin-bottom: 0.375rem;
+}
+
+.facts dd {
+    margin: 0;
+    color: var(--gravel);
+}
+
+/* Privacy page */
+
+.policy {
+    padding-block: clamp(2rem, 6vw, 4rem) 4rem;
+}
+
+.policy > * {
+    max-width: 42rem;
+}
+
+.policy h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    max-width: none;
+}
+
+.policy h2 {
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+}
+
+.policy h3 {
+    font-size: 1.375rem;
+    margin-top: 2rem;
+}
+
+.policy p,
+.policy ul {
+    margin: 0.75rem 0 0;
+}
+
+.policy ul {
+    padding-left: 1.25rem;
+}
+
+.policy li + li {
+    margin-top: 0.5rem;
+}
+
+.policy .meta {
+    margin-top: 1rem;
+    color: var(--gravel);
+    font-size: 0.9375rem;
+}
+
+/* Narrow screens: stack text above the watch. */
+
+@media (max-width: 46rem) {
+    .hero,
+    .feature {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .device {
+        justify-self: start;
+    }
+
+    .hero .device {
+        justify-self: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
+    }
+}
