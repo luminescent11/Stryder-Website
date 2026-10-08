@@ -3,3 +3,8 @@
 exclude:
   - TODO.md
   - images/README.md
+
+# Dev log entries live in _posts/ as YYYY-MM-DD-title.md. They're published
+# flat at the site root (devlog-title.html) so the relative links to
+# style.css and images/ keep working.
+permalink: /devlog-:title:output_ext

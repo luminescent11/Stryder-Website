@@ -1,0 +1,32 @@
+---
+title: "Dev log: Stryder"
+description: "Notes on building Stryder, an Apple Watch app for timing sprints."
+---
+<!DOCTYPE html>
+<html lang="en">
+{% include head.html %}
+<body>
+    {% include header.html %}
+
+    <main id="main" class="post">
+        <h1>Dev log</h1>
+        <p>Updates and progress notes during the building and scaling processes of Stryder.</p>
+
+        {% if site.posts.size > 0 %}
+        <ol class="devlog">
+            {% for post in site.posts %}
+            <li>
+                <p class="meta"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%B %-d, %Y' }}</time></p>
+                <h2><a href="{{ post.url | remove_first: '/' }}">{{ post.title }}</a></h2>
+                {{ post.excerpt }}
+            </li>
+            {% endfor %}
+        </ol>
+        {% else %}
+        <p class="meta">No entries yet.</p>
+        {% endif %}
+    </main>
+
+    {% include footer.html %}
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include head.html %}
+<body>
+    {% include header.html %}
+
+    <main id="main" class="post">
+        <p class="back"><a href="devlog.html">← Dev log</a></p>
+        <h1>{{ page.title }}</h1>
+        <p class="meta"><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%B %-d, %Y' }}</time></p>
+        {{ content }}
+    </main>
+
+    {% include footer.html %}
+</body>
+</html>

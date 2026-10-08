@@ -337,6 +337,19 @@ main {
 
 /* Features */
 
+.about {
+    display: grid;
+    gap: 1.5rem;
+    padding-block: clamp(3rem, 8vw, 5rem);
+    border-top: 1px solid var(--rule);
+}
+
+.about__text {
+    display: grid;
+    gap: 1rem;
+    max-width: var(--measure);
+}
+
 .how {
     display: grid;
     gap: clamp(3rem, 7vw, 5rem);
@@ -380,50 +393,101 @@ main {
     color: var(--gravel);
 }
 
-/* Privacy page */
+/* Privacy page and dev log */
 
-.policy {
+.policy,
+.post {
     padding-block: clamp(2rem, 6vw, 4rem) 4rem;
 }
 
-.policy > * {
+.policy > *,
+.post > * {
     max-width: 42rem;
 }
 
-.policy h1 {
+.policy h1,
+.post h1 {
     font-size: clamp(2.5rem, 6vw, 4rem);
     max-width: none;
 }
 
-.policy h2 {
+.policy h2,
+.post h2 {
     font-size: clamp(1.75rem, 4vw, 2.25rem);
     margin-top: 3rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--rule);
 }
 
-.policy h3 {
+.policy h3,
+.post h3 {
     font-size: 1.375rem;
     margin-top: 2rem;
 }
 
 .policy p,
-.policy ul {
+.post p,
+.policy ul,
+.post ul {
     margin: 0.75rem 0 0;
 }
 
-.policy ul {
+.policy ul,
+.post ul {
     padding-left: 1.25rem;
 }
 
-.policy li + li {
+.policy li + li,
+.post li + li {
     margin-top: 0.5rem;
 }
 
-.policy .meta {
+.policy .meta,
+.post .meta {
     margin-top: 1rem;
     color: var(--gravel);
     font-size: 0.9375rem;
+}
+
+.post .back {
+    margin: 0 0 1rem;
+}
+
+.devlog {
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+}
+
+.devlog li {
+    display: grid;
+    gap: 0.5rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--rule);
+}
+
+.devlog li + li {
+    margin-top: 0;
+}
+
+.post .devlog h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.devlog h2 a {
+    color: var(--infield);
+    text-decoration: none;
+}
+
+.devlog h2 a:hover {
+    color: var(--lane);
+}
+
+.post .devlog p {
+    margin: 0;
 }
 
 /* Narrow screens: stack text above the watch. */
