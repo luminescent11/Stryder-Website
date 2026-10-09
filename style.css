@@ -627,13 +627,21 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
-    min-height: 3rem;
+    gap: 2.5rem;
+    min-height: clamp(3rem, 7svh, 4rem);
     background: var(--track);
+    font-size: 2rem;
+    line-height: 1.2;
     color: #FFFFFF;
     font-weight: 700;
     text-decoration: none;
     transition: background-color 0.2s ease;
+}
+
+/* Arrows bob downward, pointing on to the next section. */
+.more-link span {
+    display: inline-block;
+    animation: nudge 1.6s ease-in-out infinite;
 }
 
 .more-link:hover {
@@ -1060,6 +1068,15 @@ html .facts .fact:hover {
 @keyframes flash {
     50% {
         opacity: 0;
+    }
+}
+
+@keyframes nudge {
+    0%, 100% {
+        translate: 0 -0.15em;
+    }
+    50% {
+        translate: 0 0.15em;
     }
 }
 
