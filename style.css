@@ -7,18 +7,36 @@
     src: url("fonts/Archivo-latin-var.woff2") format("woff2");
 }
 
+/* Colors come from a running track: the red surface, green infield and white
+   lane lines of the logo, on the near-black of the logo and the app. */
 :root {
+    /* Dark: hero, header, stats, footer */
+    --ink: #0B0B0C;
+    --ink-2: #16181C;
+    --mist: #A0A6B1;
+    --mist-light: #D4D6DB;
+
+    /* Track */
+    --track: #C8452F;
+    --track-hot: #E5432C;
+    --track-deep: #B23A26;
+    --infield: #2C5B3D;
+    --lane: #F5F5F0;
+
+    /* Light: reading sections */
     --chalk: #F3F4F1;
-    --infield: #17233B;
-    --lane: #3B5A96;
-    --lane-tint: #E2E7F0;
-    --finish: #D7261E;
+    --paper: #FFFFFF;
+    --text: #17233B;
     --gravel: #626977;
     --rule: #D5D8DE;
 
     --font: "Archivo", "Arial Narrow", system-ui, sans-serif;
     --gutter: clamp(1rem, 4vw, 3rem);
     --measure: 36rem;
+    --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+    /* Lane lines: thin white lines between red lanes, like a strip of track. */
+    --lanes: repeating-linear-gradient(to bottom, var(--lane) 0 1px, var(--track) 1px 6px);
 }
 
 *,
@@ -29,12 +47,14 @@
 
 html {
     -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
 }
 
 body {
     margin: 0;
     background: var(--chalk);
-    color: var(--infield);
+    color: var(--text);
     font-family: var(--font);
     font-size: 1.0625rem;
     line-height: 1.55;
@@ -49,26 +69,33 @@ img {
 }
 
 a {
-    color: var(--lane);
+    color: var(--track-deep);
     text-underline-offset: 0.15em;
 }
 
 a:hover {
-    color: var(--infield);
+    color: var(--text);
 }
 
 :focus-visible {
-    outline: 3px solid var(--lane);
+    outline: 3px solid var(--track-deep);
     outline-offset: 3px;
+}
+
+.hero :focus-visible,
+.site-header :focus-visible,
+.site-footer :focus-visible {
+    outline-color: var(--lane);
 }
 
 .skip-link {
     position: absolute;
+    z-index: 100;
     left: var(--gutter);
     top: -4rem;
     padding: 0.5rem 0.75rem;
-    background: var(--infield);
-    color: var(--chalk);
+    background: var(--lane);
+    color: var(--ink);
 }
 
 .skip-link:focus {
@@ -106,28 +133,67 @@ p {
     margin: 0;
 }
 
-/* Header and footer */
+/* Section headings on light backgrounds get a short red lane marker above. */
+.about h2::before,
+.policy h2::before,
+.post > h2::before {
+    content: "";
+    display: block;
+    width: 3rem;
+    height: 4px;
+    margin-bottom: 1rem;
+    background: var(--track);
+}
 
-.site-header,
-.site-footer,
-main {
+.wrap,
+.site-header__inner,
+.site-footer__inner,
+.policy,
+.post {
     max-width: 72rem;
     margin-inline: auto;
     padding-inline: var(--gutter);
 }
 
+/* Header */
+
 .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--ink);
+    color: var(--lane);
+    border-bottom: 2px solid var(--track);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Home: floats over the dark hero, then turns solid once the page scrolls. */
+.home .site-header {
+    position: fixed;
+    inset: 0 0 auto;
+    background: transparent;
+    border-bottom-color: transparent;
+}
+
+.home .site-header.is-scrolled {
+    background: rgba(11, 11, 12, 0.85);
+    border-bottom-color: var(--track);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+}
+
+.site-header__inner {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem 1.5rem;
-    padding-block: 1.25rem;
+    padding-block: 1rem;
 }
 
 .wordmark {
     font-size: 1.75rem;
-    color: var(--infield);
+    color: var(--lane);
     text-decoration: none;
 }
 
@@ -135,6 +201,10 @@ main {
     display: inline-flex;
     align-items: center;
     gap: 0.625rem;
+}
+
+.site-header .wordmark:hover {
+    color: var(--lane);
 }
 
 .wordmark__logo {
@@ -145,29 +215,53 @@ main {
 
 .site-header nav {
     display: flex;
-    gap: 1.25rem;
+    flex-wrap: wrap;
+    gap: 0.25rem 1.25rem;
 }
 
 .site-header nav a {
-    color: var(--infield);
-    text-decoration: none;
+    color: var(--lane);
+    text-decoration: underline 2px transparent;
+    text-underline-offset: 0.4em;
+    transition: text-decoration-color 0.2s ease;
 }
 
 .site-header nav a:hover,
 .site-header nav a[aria-current="page"] {
-    text-decoration: underline;
+    color: var(--lane);
+    text-decoration-color: var(--track-hot);
 }
 
+/* Footer */
+
 .site-footer {
+    position: relative;
+    background: var(--ink);
+    color: var(--mist);
+    font-size: 0.9375rem;
+}
+
+.site-footer::before {
+    content: "";
+    display: block;
+    height: 19px;
+    background: var(--lanes);
+}
+
+.site-footer__inner {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 0.5rem 2rem;
-    padding-block: 2rem 3rem;
-    /* Divider spans the content width, not the side padding. */
-    background: linear-gradient(var(--rule), var(--rule)) center top / calc(100% - 2 * var(--gutter)) 1px no-repeat;
-    color: var(--gravel);
-    font-size: 0.9375rem;
+    padding-block: 2.5rem 3rem;
+}
+
+.site-footer a {
+    color: var(--lane);
+}
+
+.site-footer a:hover {
+    color: var(--track-hot);
 }
 
 .site-footer .legal {
@@ -175,32 +269,199 @@ main {
     font-size: 0.8125rem;
 }
 
-/* Hero */
+/* Hero: first screen on a dark field, lit by a red glow behind the watch.
+   The hero and the stats band share the first screen; sizes follow the window
+   height as well as its width so both still fit on short laptop windows. */
+
+.first-screen {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh;
+    overflow: hidden;
+    background: var(--ink);
+}
 
 .hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    /* Spare height on tall windows goes above the headline, keeping the form
+       close to the stats. */
+    justify-content: flex-end;
+    flex: 1 0 auto;
+    padding-block: clamp(5rem, 13svh, 7rem) clamp(1rem, 3svh, 2rem);
+    color: var(--lane);
+}
+
+.hero__bg,
+.hero__bg > * {
+    position: absolute;
+    pointer-events: none;
+}
+
+.hero__bg {
+    inset: 0;
+    z-index: -1;
+}
+
+/* Faint scanlines and a measuring grid, fading out toward the edges. */
+.hero__grid {
+    inset: 0;
+    background:
+        repeating-linear-gradient(to bottom, rgba(245, 245, 240, 0.025) 0 1px, transparent 1px 3px),
+        linear-gradient(rgba(245, 245, 240, 0.05) 1px, transparent 1px) 0 0 / 64px 64px,
+        linear-gradient(90deg, rgba(245, 245, 240, 0.05) 1px, transparent 1px) 0 0 / 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse at 65% 40%, #000 20%, transparent 75%);
+    mask-image: radial-gradient(ellipse at 65% 40%, #000 20%, transparent 75%);
+}
+
+.hero__glow {
+    right: -20%;
+    top: 45%;
+    width: min(60rem, 120vw);
+    aspect-ratio: 1;
+    translate: 0 -50%;
+    background: radial-gradient(closest-side, rgba(229, 67, 44, 0.62), rgba(200, 69, 47, 0.26) 45%, rgba(142, 43, 28, 0.08) 75%, transparent);
+    animation: glow 7s ease-in-out infinite;
+}
+
+.hero__inner {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: 2.5rem 4rem;
-    padding-block: clamp(2rem, 6vw, 5rem) clamp(3rem, 8vw, 6rem);
+    gap: 3rem 4rem;
+    width: 100%;
 }
 
 .hero__text {
     display: grid;
-    gap: 1.5rem;
-    max-width: var(--measure);
+    gap: clamp(1rem, 3svh, 1.75rem);
+    max-width: 40rem;
 }
 
-.lede {
-    font-size: 1.25rem;
-    max-width: 32rem;
+.hero h1 {
+    font-size: clamp(2.75rem, min(7.5vw, 11.5svh), 6.5rem);
+    max-width: none;
+    text-wrap: balance;
+    animation: clip-up 0.9s var(--ease-out) both;
 }
+
+.hero .waitlist { animation: rise 0.7s 0.4s var(--ease-out) both; }
+.hero .helper { animation: rise 0.7s 0.55s var(--ease-out) both; }
 
 .note {
-    padding: 0.75rem 1rem;
-    background: var(--lane-tint);
-    border-left: 4px solid var(--lane);
+    padding: 0.5rem 0.75rem;
+    background: rgba(245, 245, 240, 0.06);
+    border-left: 3px solid var(--track-hot);
+    color: var(--mist-light);
     font-size: 0.9375rem;
+}
+
+.hero a {
+    color: var(--lane);
+    text-decoration-color: var(--track-hot);
+}
+
+.hero a:hover {
+    color: var(--track-hot);
+}
+
+/* Watch with a slowly turning timing ring behind it. */
+.hero__visual {
+    position: relative;
+    display: grid;
+    place-items: center;
+    justify-self: center;
+}
+
+.hero__visual > * {
+    grid-area: 1 / 1;
+}
+
+.ring {
+    position: relative;
+    width: clamp(13rem, min(34vw, 40svh), 25rem);
+    max-width: 92vw;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px dashed rgba(245, 245, 240, 0.16);
+    animation: spin 60s linear infinite, fade-in 1.2s 0.3s both;
+}
+
+/* Tick marks around the inside of the ring. */
+.ring::before {
+    content: "";
+    position: absolute;
+    inset: 7%;
+    border-radius: 50%;
+    background: repeating-conic-gradient(rgba(245, 245, 240, 0.35) 0 0.6deg, transparent 0.6deg 6deg);
+    -webkit-mask-image: radial-gradient(closest-side, transparent calc(100% - 12px), #000 calc(100% - 11px));
+    mask-image: radial-gradient(closest-side, transparent calc(100% - 12px), #000 calc(100% - 11px));
+}
+
+/* A red sweep running around the ring, like a lap counter. */
+.ring::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--track-hot);
+    animation: spin 2.4s linear infinite;
+}
+
+.hero .device {
+    --w: clamp(10rem, min(24vw, 28svh), 17.5rem);
+    animation: float 6s ease-in-out infinite, pop-in 0.9s 0.2s var(--ease-out) both;
+}
+
+.readout {
+    align-self: end;
+    justify-self: start;
+    margin: 0 0 12% -1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 1rem;
+    background: rgba(22, 24, 28, 0.88);
+    border: 1px solid rgba(245, 245, 240, 0.12);
+    border-left: 3px solid var(--track-hot);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    animation: rise 0.7s 0.6s var(--ease-out) both;
+}
+
+.readout__dot {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    background: var(--track-hot);
+    animation: blink 1.2s ease-in-out infinite;
+}
+
+.readout__value,
+.stat__value {
+    font-stretch: 112%;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    letter-spacing: -0.01em;
+}
+
+.readout__value {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    min-width: 6ch;
+}
+
+/* Timer finished: the light stays on and the time flashes three times. */
+.readout.is-done .readout__dot {
+    animation: none;
+}
+
+.readout.is-done .readout__value {
+    animation: flash 0.4s steps(1) 3;
 }
 
 /* Waitlist form */
@@ -217,7 +478,15 @@ main {
 .waitlist__row {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 0.5rem;
+}
+
+/* Sits beside the controls so it doesn't push the form down. */
+.waitlist__row .note {
+    flex: 1 1 12rem;
+    font-size: 0.8125rem;
+    line-height: 1.4;
 }
 
 .waitlist input,
@@ -228,42 +497,48 @@ main {
 }
 
 .waitlist input {
-    flex: 1 1 14rem;
+    flex: 1 1 11rem;
+    min-width: 0;
     padding: 0 0.875rem;
-    border: 2px solid var(--infield);
-    background: #FFFFFF;
-    color: var(--infield);
+    border: 2px solid rgba(245, 245, 240, 0.4);
+    background: rgba(245, 245, 240, 0.05);
+    color: var(--lane);
+}
+
+.waitlist input::placeholder {
+    color: var(--mist);
 }
 
 .waitlist button {
     flex: 0 0 auto;
     padding: 0 1.25rem;
     border: 0;
-    background: var(--finish);
+    background: var(--track);
     color: #FFFFFF;
     font-weight: 700;
     cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .waitlist button:hover {
-    background: #B81F18;
+    background: var(--track-deep);
 }
 
 /* Sign-up isn't open yet: keep the controls legible but clearly inactive. */
 .waitlist input:disabled {
-    border-color: var(--gravel);
+    border-color: rgba(245, 245, 240, 0.2);
     background: transparent;
     cursor: not-allowed;
 }
 
 .waitlist button:disabled {
-    background: var(--rule);
-    color: var(--gravel);
+    background: rgba(245, 245, 240, 0.1);
+    color: var(--mist);
     cursor: not-allowed;
 }
 
 .waitlist__error {
-    color: var(--finish);
+    color: var(--track-hot);
     font-size: 0.9375rem;
 }
 
@@ -272,7 +547,7 @@ main {
 }
 
 .helper {
-    color: var(--gravel);
+    color: var(--mist);
     font-size: 0.875rem;
 }
 
@@ -283,14 +558,11 @@ main {
 .device {
     --w: 13rem;
     position: relative;
+    isolation: isolate;
     width: var(--w);
     aspect-ratio: 580 / 940;
     margin: 0;
     justify-self: center;
-}
-
-.hero .device {
-    --w: clamp(14rem, 26vw, 19rem);
 }
 
 .feature .device {
@@ -335,13 +607,92 @@ main {
     text-align: center;
 }
 
-/* Features */
+/* Stats band: big scoreboard numbers on dark, closed off by a full-width red "Read more" bar. */
 
-.about {
+/* Transparent so the hero's glow carries on behind it without a seam. */
+.stats {
+    position: relative;
+    color: var(--lane);
+}
+
+.stats__grid {
     display: grid;
-    gap: 1.5rem;
-    padding-block: clamp(3rem, 8vw, 5rem);
-    border-top: 1px solid var(--rule);
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 1.5rem 2rem;
+    padding-block: clamp(1.25rem, min(5vw, 5svh), 3.75rem);
+}
+
+/* "Read more" bar under the stats, edge to edge, leading on to How It Works. */
+.more-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 3rem;
+    background: var(--track);
+    color: #FFFFFF;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.more-link:hover {
+    background: var(--track-deep);
+    color: #FFFFFF;
+}
+
+.more-link:focus-visible {
+    outline-color: var(--lane);
+    outline-offset: -5px;
+}
+
+.stat {
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--track-hot);
+}
+
+.stat__value {
+    display: flex;
+    align-items: center;
+    gap: 0.35em;
+    font-size: clamp(2rem, min(4vw, 5.5svh), 3rem);
+    text-shadow: 0 0 32px rgba(229, 67, 44, 0.45);
+}
+
+/* Green down arrow for a time that improved, red up arrow (--up) for one that got
+   slower; they appear once the stats fill in. */
+.stat__trend {
+    display: none;
+    font-size: 0.5em;
+    color: #3DDC84;
+    text-shadow: 0 0 24px rgba(61, 220, 132, 0.5);
+}
+
+.stat__trend--up {
+    color: var(--track-hot);
+    text-shadow: 0 0 24px rgba(229, 67, 44, 0.5);
+}
+
+.stats.is-done .stat__trend {
+    display: inline;
+    animation: rise 0.5s var(--ease-out) both;
+}
+
+.stat__label {
+    color: var(--mist);
+}
+
+/* About */
+
+.about__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+    align-items: start;
+    gap: 3rem 5rem;
+    padding-block: clamp(4rem, 9vw, 7rem);
 }
 
 .about__text {
@@ -350,34 +701,161 @@ main {
     max-width: var(--measure);
 }
 
+.about__text h2 {
+    margin-bottom: 0.5rem;
+}
+
+/* Photo slot. Until the photo exists it shows a strip of track and the file name.
+   The clipped corner gives it a machined, instrument-panel edge. */
+.photo {
+    position: sticky;
+    top: 6rem;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 4 / 5;
+    margin: 0;
+    overflow: hidden;
+    background:
+        repeating-linear-gradient(90deg, var(--track) 0 calc(12.5% - 2px), var(--lane) calc(12.5% - 2px) 12.5%);
+    clip-path: polygon(0 0, calc(100% - 2.5rem) 0, 100% 2.5rem, 100% 100%, 2.5rem 100%, 0 calc(100% - 2.5rem));
+}
+
+.photo img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo__placeholder {
+    padding: 0.375rem 0.75rem;
+    background: var(--ink);
+    color: var(--mist-light);
+    font-size: 0.875rem;
+}
+
+/* How it works */
+
 .how {
+    background: var(--paper);
+}
+
+.how__inner {
     display: grid;
     gap: clamp(3rem, 7vw, 5rem);
-    padding-block: clamp(3rem, 8vw, 5rem);
-    border-top: 1px solid var(--rule);
+    padding-block: clamp(4rem, 9vw, 7rem);
+}
+
+/* The steps hang off a dashed lane line down the middle. */
+.steps {
+    position: relative;
+    display: grid;
+    gap: clamp(3rem, 7vw, 5rem);
+}
+
+.steps::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    translate: -1px 0;
+    background: linear-gradient(to bottom, var(--track) 14px, transparent 14px) 0 0 / 2px 24px repeat-y;
+    opacity: 0.6;
+    animation: dash-run 0.8s linear infinite;
 }
 
 .feature {
+    position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: center;
-    gap: 1.5rem 4rem;
-    max-width: 58rem;
+    gap: 1.5rem 6rem;
+}
+
+/* Marker where each step meets the line. */
+.feature::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1rem;
+    height: 1rem;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: var(--track-hot);
+    box-shadow: 0 0 0 5px var(--paper), 0 0 0 7px rgba(229, 67, 44, 0.3);
 }
 
 .feature__text {
     display: grid;
     gap: 0.75rem;
-    max-width: var(--measure);
+    max-width: 28rem;
+    justify-self: end;
+}
+
+.feature .device {
+    justify-self: start;
+}
+
+.feature:nth-child(even) .feature__text {
+    order: 2;
+    justify-self: start;
+}
+
+.feature:nth-child(even) .device {
+    justify-self: end;
+}
+
+.feature__index {
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-stretch: 112%;
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--track);
+}
+
+/* Soft track-red glow behind each watch. */
+.feature .device::before {
+    content: "";
+    position: absolute;
+    inset: 5% -30%;
+    z-index: -1;
+    background: radial-gradient(closest-side, rgba(229, 67, 44, 0.22), transparent);
 }
 
 .facts {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-    gap: 2rem 3rem;
+    gap: 1.5rem;
     margin: 0;
-    padding-top: 2.5rem;
-    border-top: 1px solid var(--rule);
+}
+
+.fact {
+    position: relative;
+    padding: 1.75rem 1.5rem 1.5rem;
+    background: var(--chalk);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1.25rem), calc(100% - 1.25rem) 100%, 0 100%);
+}
+
+.fact::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 7px;
+    background: var(--lanes);
+}
+
+html .facts .fact {
+    transition: opacity 0.7s ease, transform 0.25s ease, background-color 0.25s ease;
+}
+
+html .facts .fact:hover {
+    transform: translateY(-4px);
+    background: #EAECE6;
 }
 
 .facts dt {
@@ -391,6 +869,19 @@ main {
 .facts dd {
     margin: 0;
     color: var(--gravel);
+}
+
+/* Scroll reveals. Only hidden when script.js is running to reveal them. */
+
+.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.8s var(--ease-out);
+}
+
+.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
 }
 
 /* Privacy page and dev log */
@@ -453,17 +944,34 @@ main {
     margin: 0 0 1rem;
 }
 
+/* Dev log: entries run down a lane line like splits on a timeline. */
 .devlog {
     list-style: none;
     margin: 2rem 0 0;
-    padding: 0;
+    padding: 0 0 0 1.75rem;
+    background: linear-gradient(to bottom, var(--track) 14px, transparent 14px) 0 0 / 2px 24px repeat-y;
+    animation: dash-run 0.8s linear infinite;
 }
 
 .devlog li {
+    position: relative;
     display: grid;
     gap: 0.5rem;
     padding-block: 1.5rem;
     border-top: 1px solid var(--rule);
+}
+
+.devlog li::before {
+    content: "";
+    position: absolute;
+    left: calc(-1.75rem + 1px);
+    top: 1.95rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    translate: -50% 0;
+    border-radius: 50%;
+    background: var(--track-hot);
+    box-shadow: 0 0 0 4px var(--chalk);
 }
 
 .devlog li + li {
@@ -478,39 +986,152 @@ main {
 }
 
 .devlog h2 a {
-    color: var(--infield);
+    color: var(--text);
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .devlog h2 a:hover {
-    color: var(--lane);
+    color: var(--track-deep);
 }
 
 .post .devlog p {
     margin: 0;
 }
 
-/* Narrow screens: stack text above the watch. */
+/* Animations */
+
+@keyframes clip-up {
+    from {
+        clip-path: inset(0 0 100% 0);
+        transform: translateY(0.4em);
+    }
+    to {
+        clip-path: inset(-20% -5% -20% -5%);
+        transform: none;
+    }
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+@keyframes pop-in {
+    from {
+        opacity: 0;
+        scale: 0.92;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes float {
+    50% {
+        translate: 0 -12px;
+    }
+}
+
+@keyframes spin {
+    to {
+        rotate: 360deg;
+    }
+}
+
+@keyframes glow {
+    50% {
+        opacity: 0.7;
+        scale: 1.06;
+    }
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.25;
+    }
+}
+
+@keyframes flash {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Moves a dashed line down by one dash period (24px), so it loops seamlessly. */
+@keyframes dash-run {
+    to {
+        background-position: 0 24px;
+    }
+}
+
+/* Narrow screens: stack text above the watch; steps run down a line on the left. */
 
 @media (max-width: 46rem) {
-    .hero,
-    .feature {
+    /* The header wraps to two rows here. */
+    html {
+        scroll-padding-top: 7.5rem;
+    }
+
+    .hero {
+        padding-block: 9rem 4rem;
+    }
+
+    .hero__inner,
+    .about__inner {
         grid-template-columns: minmax(0, 1fr);
     }
 
-    .device {
+    .photo {
+        position: relative;
+        top: auto;
+        aspect-ratio: 4 / 3;
+    }
+
+    .steps::before {
+        left: 0.5rem;
+    }
+
+    .feature {
+        grid-template-columns: minmax(0, 1fr);
+        padding-left: 2.5rem;
+    }
+
+    .feature::before {
+        left: 0.5rem;
+        top: 1.75rem;
+    }
+
+    .feature .feature__text,
+    .feature:nth-child(even) .feature__text {
+        order: 0;
         justify-self: start;
     }
 
-    .hero .device {
-        justify-self: center;
+    .feature .device,
+    .feature:nth-child(even) .device {
+        justify-self: start;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
     * {
         scroll-behavior: auto !important;
         transition: none !important;
         animation: none !important;
+    }
+
+    .js [data-reveal] {
+        opacity: 1;
+        transform: none;
     }
 }

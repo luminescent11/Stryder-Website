@@ -1,132 +1,185 @@
 ---
-title: "Stryder: sprint timing on Apple Watch"
+title: "Stryder"
 description: "Stryder is an Apple Watch app that times your sprints. It starts on your first push, stops at your distance, and saves the whole run. In testing now."
 ---
 <!DOCTYPE html>
 <html lang="en">
 {% include head.html %}
-<body>
+<body class="home">
     {% include header.html %}
 
     <main id="main">
-        <section class="hero" aria-labelledby="hero-title">
-            <div class="hero__text">
-                <h1 id="hero-title">Sprint timing from your wrist.</h1>
-                <p class="lede">Stryder is an Apple Watch app that starts timing on your first push, stops at your distance, and keeps the whole run. In testing now.</p>
-
-                <p class="note" role="note">Waitlist sign-up isn't open yet. For beta news in the meantime, email support.stryder@gmail.com.</p>
-
-                <!-- WAITLIST: when sign-up opens, replace the <form> tag below with
-                     <form id="waitlist" class="waitlist" action="https://submit-form.com/V3xgTuhTt" method="POST">
-                     then remove the two `disabled` attributes and the note above. -->
-                <form id="waitlist" class="waitlist">
-                    <label for="email">Email</label>
-                    <div class="waitlist__row">
-                        <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" disabled>
-                        <button type="submit" disabled>Join the waitlist</button>
-                    </div>
-                    <!-- WAITLIST: uncomment the spam trap below (confirm the field name in Formspark's docs).
-                    <input type="checkbox" name="_honeypot" tabindex="-1" autocomplete="off" hidden>
-                    -->
-                    <p id="waitlist-error" class="waitlist__error" hidden>Couldn't join the waitlist. Check your connection and try again, or email support.stryder@gmail.com.</p>
-                </form>
-                <p id="waitlist-done" class="waitlist__done" role="status" tabindex="-1" hidden>You're on the waitlist. We'll email you when the beta opens.</p>
-                <p class="helper">Beta updates only. Unsubscribe anytime. You must be 13 or older. <a href="privacy.html">Privacy policy</a></p>
-            </div>
-
-            <figure class="device">
-                <div class="device__screen">
-                    <span class="device__placeholder">watch-hero.png</span>
-                    <img src="images/watch-hero.png" alt="Stryder on Apple Watch" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+        <div class="first-screen">
+            <section class="hero" aria-labelledby="hero-title">
+                <div class="hero__bg" aria-hidden="true">
+                    <div class="hero__grid"></div>
+                    <div class="hero__glow"></div>
                 </div>
-                <img class="device__frame" src="images/watch-frame.png" alt="">
-            </figure>
-        </section>
+
+                <div class="wrap hero__inner">
+                    <div class="hero__text">
+                        <h1 id="hero-title">Sprint timing from your wrist.</h1>
+
+                        <!-- WAITLIST: when sign-up opens, replace the <form> tag below with
+                             <form id="waitlist" class="waitlist" action="https://submit-form.com/V3xgTuhTt" method="POST">
+                             then remove the two `disabled` attributes and the note beside them. -->
+                        <form id="waitlist" class="waitlist">
+                            <label for="email">Email</label>
+                            <div class="waitlist__row">
+                                <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" disabled>
+                                <button type="submit" disabled>Join the waitlist</button>
+                                <p class="note" role="note">Waitlist sign-up isn't open yet. For beta news, email support.stryder@gmail.com.</p>
+                            </div>
+                            <!-- WAITLIST: uncomment the spam trap below (confirm the field name in Formspark's docs).
+                            <input type="checkbox" name="_honeypot" tabindex="-1" autocomplete="off" hidden>
+                            -->
+                            <p id="waitlist-error" class="waitlist__error" hidden>Couldn't join the waitlist. Check your connection and try again, or email support.stryder@gmail.com.</p>
+                        </form>
+                        <p id="waitlist-done" class="waitlist__done" role="status" tabindex="-1" hidden>You're on the waitlist. We'll email you when the beta opens.</p>
+                        <p class="helper">Beta updates only. Unsubscribe anytime. You must be 13 or older. <a href="privacy.html">Privacy policy</a></p>
+                    </div>
+
+                    <div class="hero__visual">
+                        <div class="ring" aria-hidden="true"></div>
+                        <figure class="device">
+                            <div class="device__screen">
+                                <span class="device__placeholder">watch-hero.png</span>
+                                <img src="images/watch-hero.png" alt="Stryder on Apple Watch" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                            </div>
+                            <img class="device__frame" src="images/watch-frame.png" alt="">
+                        </figure>
+                        <!-- READOUT: a timer that runs in real time from data-start and stops at
+                             data-final (both in seconds, e.g. data-final="11.42"). -->
+                        <div class="readout" aria-hidden="true">
+                            <span class="readout__dot"></span>
+                            <span class="readout__value" data-timer data-start="9.50" data-final="12.07">9.50s</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STATS: each value shows "–" until the hero timer stops, then fills in from
+                 data-value (a number counts up; text before or after it, like "s", stays). -->
+            <section id="stats" class="stats">
+                <div class="wrap stats__grid">
+                    <div class="stat" data-reveal>
+                        <p class="stat__value"><span class="stat__trend" aria-hidden="true">▼</span><span data-value="0.09s">–</span></p>
+                        <p class="stat__label">Improvement over your past five 100m sprints</p>
+                    </div>
+                    <div class="stat" data-reveal>
+                        <p class="stat__value"><span class="stat__trend stat__trend--up" aria-hidden="true">▲</span><span data-value="4.52s">–</span></p>
+                        <p class="stat__label">0–30m split</p>
+                    </div>
+                    <div class="stat" data-reveal>
+                        <p class="stat__value"><span class="stat__trend" aria-hidden="true">▼</span><span data-value="3.20s">–</span></p>
+                        <p class="stat__label">30–60m split</p>
+                    </div>
+                    <div class="stat" data-reveal>
+                        <p class="stat__value"><span class="stat__trend" aria-hidden="true">▼</span><span data-value="4.35s">–</span></p>
+                        <p class="stat__label">60–100m split</p>
+                    </div>
+                </div>
+                <a class="more-link" href="#how"><span aria-hidden="true">↓</span> Read more <span aria-hidden="true">↓</span></a>
+            </section>
+        </div>
 
         <section id="about" class="about" aria-labelledby="about-title">
-            <h2 id="about-title">Why Stryder</h2>
-            <div class="about__text">
-                <p>Track athletes, particularly sprinters and hurdlers (but also jumpers who are working on speed, as well as athletes in other sports that rely on short-distance speed), need to know their times to understand how well they are performing in practice. However, existing solutions range from inexpensive but inaccurate (stopwatches and hand timing) to completely unaffordable (laser timing gates, $1000+) and more accurate than practice needs.</p>
-                <p>Another related issue is that athletes need to know more than just their 100m time trial. Individual split segment times further detail strengths and weaknesses. Graphs tracking performance over the past month are helpful for visualizing improvements.</p>
-                <p>Stryder fixes both problems: an affordable smartwatch app that times runs automatically using the watch's embedded sensors, achieving practice-level accuracy without expensive hardware, and includes extensive data analysis features.</p>
-                <p>As a student-athlete myself who is trying to lower my own times, I felt that the existing systems of stopwatches and just remembering my times did not work well enough to understand how I was doing.</p>
-                <p>Currently, Stryder is in the early development phase. The baseline stride detection model is in development, and basic data analysis features have been implemented.</p>
+            <div class="wrap about__inner">
+                <div class="about__text">
+                    <h2 id="about-title" data-reveal>Why Stryder</h2>
+                    <p data-reveal>Track athletes, particularly sprinters and hurdlers (but also jumpers who are working on speed, as well as athletes in other sports that rely on short-distance speed), need to know their times to understand how well they are performing in practice. However, existing solutions range from inexpensive but inaccurate (stopwatches and hand timing) to completely unaffordable (laser timing gates, $1000+) and more accurate than practice needs.</p>
+                    <p data-reveal>Another related issue is that athletes need to know more than just their 100m time trial. Individual split segment times further detail strengths and weaknesses. Graphs tracking performance over the past month are helpful for visualizing improvements.</p>
+                    <p data-reveal>Stryder fixes both problems: an affordable smartwatch app that times runs automatically using the watch's embedded sensors, achieving practice-level accuracy without expensive hardware, and includes extensive data analysis features.</p>
+                    <p data-reveal>As a student-athlete myself who is trying to lower my own times, I felt that the existing systems of stopwatches and just remembering my times did not work well enough to understand how I was doing.</p>
+                    <p data-reveal>Currently, Stryder is in the early development phase. The baseline stride detection model is in development, and basic data analysis features have been implemented.</p>
+                </div>
+                <figure class="photo" data-reveal>
+                    <span class="photo__placeholder">about-track.webp</span>
+                    <img src="images/about-track.webp" alt="Lane lines on a red running track" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                </figure>
             </div>
         </section>
 
-        <section id="how" class="how" aria-labelledby="how-title">
-            <h2 id="how-title">How It Works</h2>
-
-            <div class="feature">
-                <div class="feature__text">
-                    <h3>Starts on your first push</h3>
-                    <p>Set your distance and get in position. Stryder starts the clock on your first explosive movement, so nobody has to stand at the start line with a stopwatch.</p>
-                </div>
-                <figure class="device">
-                    <div class="device__screen">
-                        <span class="device__placeholder">watch-start.png</span>
-                        <img src="images/watch-start.png" alt="Stryder ready to start a sprint" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+        <section id="how" class="how" aria-label="How it works">
+            <div class="wrap how__inner">
+                <div class="steps">
+                    <div class="feature">
+                        <div class="feature__text" data-reveal>
+                            <span class="feature__index" aria-hidden="true">01</span>
+                            <h3>Starts on your first push</h3>
+                            <p>Set your distance and get in position. Stryder starts the clock on your first explosive movement, so nobody has to stand at the start line with a stopwatch.</p>
+                        </div>
+                        <figure class="device" data-reveal>
+                            <div class="device__screen">
+                                <span class="device__placeholder">watch-start.png</span>
+                                <img src="images/watch-start.png" alt="Stryder ready to start a sprint" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                            </div>
+                            <img class="device__frame" src="images/watch-frame.png" alt="">
+                        </figure>
                     </div>
-                    <img class="device__frame" src="images/watch-frame.png" alt="">
-                </figure>
-            </div>
 
-            <div class="feature">
-                <div class="feature__text">
-                    <h3>Stops at your distance</h3>
-                    <p>Stryder uses your watch's GPS and motion sensors to track how far you've run, and stops the time when you reach the distance you set.</p>
-                </div>
-                <figure class="device">
-                    <div class="device__screen">
-                        <span class="device__placeholder">watch-stop.png</span>
-                        <img src="images/watch-stop.png" alt="Stryder showing a finished time" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                    <div class="feature">
+                        <div class="feature__text" data-reveal>
+                            <span class="feature__index" aria-hidden="true">02</span>
+                            <h3>Stops at your distance</h3>
+                            <p>Stryder uses your watch's GPS and motion sensors to track how far you've run, and stops the time when you reach the distance you set.</p>
+                        </div>
+                        <figure class="device" data-reveal>
+                            <div class="device__screen">
+                                <span class="device__placeholder">watch-stop.png</span>
+                                <img src="images/watch-stop.png" alt="Stryder showing a finished time" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                            </div>
+                            <img class="device__frame" src="images/watch-frame.png" alt="">
+                        </figure>
                     </div>
-                    <img class="device__frame" src="images/watch-frame.png" alt="">
-                </figure>
-            </div>
 
-            <div class="feature">
-                <div class="feature__text">
-                    <h3>See where the time went</h3>
-                    <p>Stryder breaks each sprint into splits, so you can see how your start, middle and finish each went, not just the final time.</p>
-                </div>
-                <figure class="device">
-                    <div class="device__screen">
-                        <span class="device__placeholder">watch-splits.png</span>
-                        <img src="images/watch-splits.png" alt="Stryder showing split times for a sprint" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                    <div class="feature">
+                        <div class="feature__text" data-reveal>
+                            <span class="feature__index" aria-hidden="true">03</span>
+                            <h3>See where the time went</h3>
+                            <p>Stryder breaks each sprint into splits, so you can see how your start, middle and finish each went, not just the final time.</p>
+                        </div>
+                        <figure class="device" data-reveal>
+                            <div class="device__screen">
+                                <span class="device__placeholder">watch-splits.png</span>
+                                <img src="images/watch-splits.png" alt="Stryder showing split times for a sprint" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                            </div>
+                            <img class="device__frame" src="images/watch-frame.png" alt="">
+                        </figure>
                     </div>
-                    <img class="device__frame" src="images/watch-frame.png" alt="">
-                </figure>
-            </div>
 
-            <div class="feature">
-                <div class="feature__text">
-                    <h3>Review the whole run</h3>
-                    <p>A stopwatch gives you one number. Stryder saves your time and distance through the whole run, so you have more than a single result to look back on.</p>
-                </div>
-                <figure class="device">
-                    <div class="device__screen">
-                        <span class="device__placeholder">watch-review.png</span>
-                        <img src="images/watch-review.png" alt="Stryder showing a saved run" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                    <div class="feature">
+                        <div class="feature__text" data-reveal>
+                            <span class="feature__index" aria-hidden="true">04</span>
+                            <h3>Review the whole run</h3>
+                            <p>A stopwatch gives you one number. Stryder saves your time and distance through the whole run, so you have more than a single result to look back on.</p>
+                        </div>
+                        <figure class="device" data-reveal>
+                            <div class="device__screen">
+                                <span class="device__placeholder">watch-review.png</span>
+                                <img src="images/watch-review.png" alt="Stryder showing a saved run" onload="this.previousElementSibling.hidden=true" onerror="this.hidden=true">
+                            </div>
+                            <img class="device__frame" src="images/watch-frame.png" alt="">
+                        </figure>
                     </div>
-                    <img class="device__frame" src="images/watch-frame.png" alt="">
-                </figure>
-            </div>
 
-            <dl class="facts">
-                <div>
-                    <dt>No iPhone needed</dt>
-                    <dd>Stryder runs on Apple Watch by itself.</dd>
                 </div>
-                <div>
-                    <dt>Free during the beta</dt>
-                    <dd>Nothing to buy while Stryder is in beta, and no ads in the app.</dd>
-                </div>
-                <div>
-                    <dt>Accuracy validation in progress</dt>
-                    <dd>We're measuring Stryder's accuracy on a real track, and will publish the result and method here.</dd>
-                </div>
-            </dl>
+
+                <dl class="facts">
+                    <div class="fact" data-reveal>
+                        <dt>No iPhone needed</dt>
+                        <dd>Stryder runs on Apple Watch by itself.</dd>
+                    </div>
+                    <div class="fact" data-reveal>
+                        <dt>Free during the beta</dt>
+                        <dd>Nothing to buy while Stryder is in beta, and no ads in the app.</dd>
+                    </div>
+                    <div class="fact" data-reveal>
+                        <dt>Accuracy validation in progress</dt>
+                        <dd>We're measuring Stryder's accuracy on a real track, and will publish the result and method here.</dd>
+                    </div>
+                </dl>
+            </div>
         </section>
     </main>
 
