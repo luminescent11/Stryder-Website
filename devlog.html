@@ -18,7 +18,14 @@ description: "Notes on building Stryder, an Apple Watch app for timing sprints."
             <li>
                 <p class="meta"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%B %-d, %Y' }}</time></p>
                 <h2><a href="{{ post.url | remove_first: '/' }}">{{ post.title }}</a></h2>
-                {{ post.excerpt }}
+                {% comment %} Preview: the post as plain text, cut at a word after 500 characters with "...". {% endcomment %}
+                {% assign preview = post.content | strip_html | normalize_whitespace %}
+                {% if preview.size > 500 %}
+                {% assign words = preview | slice: 0, 501 | split: " " | pop %}
+                {% assign preview = words | join: " " | append: "..." %}
+                {% endif %}
+                <p>{{ preview }}</p>
+                <p><a href="{{ post.url | remove_first: '/' }}">Read more</a></p>
             </li>
             {% endfor %}
         </ol>
